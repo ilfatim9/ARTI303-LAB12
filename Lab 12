@@ -1,0 +1,25 @@
+% Task 1 - Finding paths between cities
+% road(From, To) stores a directed connection from the sample routes.
+
+road('Dammam', 'Qatif').
+road('Dammam', 'Riyadh').
+road('Qatif', 'Madinah').
+road('Riyadh', 'Dammam').
+road('Madinah', 'Makkah').
+road('Madinah', 'Taif').
+road('Madinah', 'Tabuk').
+road('Makkah', 'Madinah').
+road('Makkah', 'Riyadh').
+road('Taif', 'Dammam').
+road('Tabuk', 'Taif').
+
+% Ask for more solutions to see the other paths.
+travel(Start, Destination, Path) :-
+    travel_path(Start, Destination, [Start], Path).
+
+travel_path(Destination, Destination, _, [Destination]).
+travel_path(Current, Destination, Visited, [Current | Rest]) :-
+    Current \== Destination,
+    road(Current, Next),
+    \+ member(Next, Visited),
+    travel_path(Next, Destination, [Next | Visited], Rest).
